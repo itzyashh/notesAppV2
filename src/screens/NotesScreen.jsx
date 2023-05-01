@@ -1,4 +1,4 @@
-import {View, Text, FlatList,TouchableOpacity} from 'react-native';
+import {View, Text, FlatList, TouchableOpacity} from 'react-native';
 import React from 'react';
 
 const NotesScreen = ({navigation}) => {
@@ -24,45 +24,45 @@ const NotesScreen = ({navigation}) => {
       }}>
       <View
         style={{
-            flex:.5,
+          flex: 0.5,
           backgroundColor: 'black',
           justifyContent: 'center',
         }}>
-            <Text style={{color: 'white', fontSize: 25, textAlign: 'center'}}>Notes</Text>
+        <Text style={{color: 'white', fontSize: 25, textAlign: 'center'}}>
+          Notes
+        </Text>
 
-            <View
-            style={{
-                backgroundColor: '#212121',
-                width: 35,
-                justifyContent: 'center',
-                alignItems: 'center',
-                height: 35,
-                borderRadius:100,
-                position: 'absolute',
-                right: 25,
-                bottom: 10,}}
-                >
-                    <TouchableOpacity
-                    
-                onPress={() => navigation.navigate('AddNote')}
-                    >
-
+        <TouchableOpacity
+          onPress={() => navigation.navigate('AddNote')}
+          style={{
+            backgroundColor: '#212121',
+            width: 35,
+            justifyContent: 'center',
+            alignItems: 'center',
+            height: 35,
+            borderRadius: 100,
+            position: 'absolute',
+            right: 25,
+            bottom: 10,
+          }}>
+          <View>
             <Text
-            style={{                
+              style={{
                 color: 'white',
                 fontSize: 20,
-            }}>
-            +</Text>
-                </TouchableOpacity>
-                </View>
-        </View>
+              }}>
+              +
+            </Text>
+          </View>
+        </TouchableOpacity>
+      </View>
       <FlatList
         contentContainerStyle={{
-            flex:1,
-            backgroundColor: '#212121',
-            padding: 10,
-            marginVertical: 10,
-            borderRadius: 10,
+          flex: 1,
+          backgroundColor: '#212121',
+          padding: 10,
+          marginVertical: 10,
+          borderRadius: 10,
         }}
         data={notes}
         renderItem={({item}) => (
