@@ -7,9 +7,12 @@ import {
   View,
 } from 'react-native';
 import React, {useState} from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 import Icon from 'react-native-vector-icons/Entypo';
 const AddNote = ({navigation}) => {
   const [title, setTitle] = useState('');
+  const [content, setContent] = useState(''); 
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -25,6 +28,13 @@ const AddNote = ({navigation}) => {
       </View>
       <View style={styles.content}>
         <FuncStrip/>
+        <TextInput
+            onChangeText={text => setContent(text)}
+            placeholder="Write your note here"
+            style={{color: 'white', fontSize: 20, padding: 10}}
+            multiline={true}
+            
+            />
       </View>
     </View>
   );
@@ -33,7 +43,11 @@ const AddNote = ({navigation}) => {
 const FuncStrip = () => {
     return (
         <View style={styles.funcStrip}>
-          <Text>funtions to be added later</Text>
+          <Text
+            style={{
+                fontSize: 6,
+            }}
+          >comming soon!!</Text>
         </View>
     )
     }
@@ -47,13 +61,14 @@ const styles = StyleSheet.create({
   title: {
     color: 'white',
     fontSize: 20,
-    textAlign: 'center',
+    textAlign: 'auto',
     fontWeight: '600',
-  },
-  header: {
+    width: '80%',
+},
+header: {
+      gap: 20,
     flexDirection: 'row',
     justifyContent: 'flex-start',
-    gap: 10,
     alignItems: 'center',
     padding: 10,
     backgroundColor: 'black',
@@ -64,4 +79,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+    content: {
+        flexGrow: 1,
+        backgroundColor: 'black',
+    }
 });
