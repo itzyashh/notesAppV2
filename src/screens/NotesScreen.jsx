@@ -27,7 +27,7 @@ const NotesScreen = ({navigation}) => {
       }}>
       <View
         style={{
-          flex: 0.5,
+          height: 250,
           backgroundColor: 'black',
           justifyContent: 'center',
         }}>
@@ -59,22 +59,28 @@ const NotesScreen = ({navigation}) => {
           </View>
         </TouchableOpacity>
       </View>
-      <FlatList
-        contentContainerStyle={{
+      <View
+        style={{
           flex: 1,
-          backgroundColor: '#212121',
-          padding: 10,
-          marginVertical: 10,
-          borderRadius: 10,
-        }}
-        data={notes}
-        renderItem={({item}) => (
-          <Text style={{padding: 10, fontSize: 18, height: 44}}>
+            backgroundColor: '#212121',
+            padding: 10,
+            marginTop: 10,
+            borderTopLeftRadius: 20,
+            borderTopRightRadius: 20,
+          }}
+      >
+        
+      <FlatList
+       
+       data={notes}
+       renderItem={({item}) => (
+         <Text style={{padding: 10, fontSize: 18, height: 44}}>
             {item.title}
           </Text>
         )}
         keyExtractor={item => item.id}
-      />
+        />
+        </View>
     </View>
   );
 };
