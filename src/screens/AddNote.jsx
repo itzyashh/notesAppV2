@@ -13,6 +13,27 @@ import Icon from 'react-native-vector-icons/Entypo';
 const AddNote = ({navigation}) => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState(''); 
+  const saveNote = async () => {
+    try {
+      const note = {
+        title,
+        content,
+        id: Math.random().toString(),
+      };
+      const storedNotes = await AsyncStorage.getItem('@notes');
+      const prevNotes = await JSON.parse(storedNotes);
+      if (!prevNotes) {
+        const newNotes = [note];
+        await AsyncStorage.setItem('@notes', JSON.stringify(newNotes));
+      } else {
+        prevNotes.push(note);
+        await AsyncStorage.setItem('@notes', JSON.stringify(prevNotes));
+      }
+      navigation.goBack();
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -22,7 +43,9 @@ const AddNote = ({navigation}) => {
         <TextInput
           onChangeText={text => setTitle(text)}
           placeholder="Title"
-          style={styles.title}>
+          style={styles.title}
+          onSubmitEditing={saveNote}
+          >
           {title}
         </TextInput>
       </View>
