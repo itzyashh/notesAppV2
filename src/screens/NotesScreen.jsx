@@ -1,10 +1,20 @@
-import {View, Text, FlatList, TouchableOpacity} from 'react-native';
-import React, { useEffect, useState } from 'react';
+import {View, Text, FlatList, TouchableOpacity,StyleSheet} from 'react-native';
+import React, {useEffect, useState} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import DisplayNote from '../components/DisplayNote';
+import Icon from 'react-native-vector-icons/Entypo';
 
 const NotesScreen = ({navigation}) => {
   const [notes, setNotes] = useState([]);
-  
+  const [screenIsFocused, setScreenIsFocused] = useState(false);
+  if (navigation.addListener) {
+    navigation.addListener('focus', () => {
+      setScreenIsFocused(true);
+    });
+    navigation.addListener('blur', () => {
+      setScreenIsFocused(false);
+    });
+  }
   const getNotes = async () => {
     try {
       const storedNotes = await AsyncStorage.getItem('@notes');
@@ -17,8 +27,9 @@ const NotesScreen = ({navigation}) => {
     }
   };
   useEffect(() => {
+    
     getNotes();
-  }, [notes]);
+  }, [screenIsFocused]);
   return (
     <View
       style={{
@@ -31,58 +42,65 @@ const NotesScreen = ({navigation}) => {
           backgroundColor: 'black',
           justifyContent: 'center',
         }}>
-        <Text style={{color: 'white', fontSize: 25, textAlign: 'center'}}>
+        <Text style={{color: 'white', fontSize: 30, textAlign: 'center'}}>
           Notes
+        </Text>
+        <Text
+          style={{
+            color: 'grey',
+            fontSize: 14,
+            textAlign: 'center',
+            marginTop: 2,
+          }}>
+          {notes.length} notes
         </Text>
 
         <TouchableOpacity
           onPress={() => navigation.navigate('AddNote')}
-          style={{
-            backgroundColor: '#212121',
-            width: 35,
-            justifyContent: 'center',
-            alignItems: 'center',
-            height: 35,
-            borderRadius: 100,
-            position: 'absolute',
-            right: 25,
-            bottom: 10,
-          }}>
+         style={styles.addButton}>
           <View>
-            <Text
-              style={{
-                color: 'white',
-                fontSize: 20,
-              }}>
-              +
-            </Text>
+            <Icon name="plus" size={20} color="white" />
           </View>
         </TouchableOpacity>
       </View>
       <View
         style={{
           flex: 1,
-            backgroundColor: '#212121',
-            padding: 10,
-            marginTop: 10,
-            borderTopLeftRadius: 20,
-            borderTopRightRadius: 20,
+          padding: 10,
+          marginTop: 10,
+          borderTopLeftRadius: 20,
+          borderTopRightRadius: 20,
+        }}>
+        <FlatList
+          keyExtractor={item => item.id}
+          data={notes}
+          numColumns={3}
+          renderItem={({item}) => {
+            console.log(item);
+            return (
+              
+                <DisplayNote note={item} navigation={navigation} />
+            );
           }}
-      >
-        
-      <FlatList
-       
-       data={notes}
-       renderItem={({item}) => (
-         <Text style={{padding: 10, fontSize: 18, height: 44}}>
-            {item.title}
-          </Text>
-        )}
-        keyExtractor={item => item.id}
         />
-        </View>
+      </View>
     </View>
   );
 };
 
+const styles = StyleSheet.create({
+  addButton: {
+      backgroundColor: '#212121',
+      width: 40,
+      justifyContent: 'center',
+      alignItems: 'center',
+      height: 40,
+      borderRadius: 100,
+      position: 'absolute',
+      right: 25,
+      bottom: 10,
+    },
+  });
+
 export default NotesScreen;
+
