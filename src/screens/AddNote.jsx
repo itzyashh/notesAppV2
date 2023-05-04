@@ -22,7 +22,7 @@ const AddNote = ({navigation}) => {
     Toast.show({
       type: 'error',
       position: 'top',
-      text1: 'Error',
+      text1: 'Title is required',
       text2: 'Title is required',
       visibilityTime: 2000,
       autoHide: true,
@@ -71,6 +71,7 @@ const AddNote = ({navigation}) => {
         <TextInput
           onChangeText={text => setTitle(text)}
           placeholder="Title"
+          cursorColor={'white'}
           style={styles.title}>
           {title}
         </TextInput>
@@ -80,12 +81,15 @@ const AddNote = ({navigation}) => {
         <TextInput
           onChangeText={text => setContent(text)}
           placeholder="Write your note here"
+          cursorColor={'white'}
+
           style={{color: 'white', fontSize: 20, padding: 10}}
           multiline={true}
           
         />
       </View>
-      <View
+      {
+        title && <View
       >
         <TouchableOpacity 
         style={styles.saveButton}
@@ -95,6 +99,8 @@ const AddNote = ({navigation}) => {
           </Text>
         </TouchableOpacity>
       </View>
+      }
+      
     </View>
   );
 };
