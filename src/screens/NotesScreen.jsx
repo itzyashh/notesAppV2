@@ -1,4 +1,4 @@
-import {View, Text, FlatList, TouchableOpacity,StyleSheet} from 'react-native';
+import {View, Text, FlatList, TouchableOpacity, StyleSheet} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import DisplayNote from '../components/DisplayNote';
@@ -27,60 +27,36 @@ const NotesScreen = ({navigation}) => {
     }
   };
   useEffect(() => {
-    
     getNotes();
   }, [screenIsFocused]);
   return (
-    <View
-      style={{
-        flex: 1,
-        backgroundColor: 'black',
-      }}>
+    <View style={styles.container}>
       <View
-        style={{
-          height: 250,
-          backgroundColor: 'black',
-          justifyContent: 'center',
-        }}>
-        <Text style={{color: 'white', fontSize: 30, textAlign: 'center'}}>
-          Notes
-        </Text>
-        <Text
-          style={{
-            color: 'grey',
-            fontSize: 14,
-            textAlign: 'center',
-            marginTop: 2,
-          }}>
-          {notes.length} notes
-        </Text>
+       style={styles.header}>
+        <Text style={styles.headerText}>Notes</Text>
+        <Text style={styles.subHeaderText}>{notes.length} notes</Text>
 
         <TouchableOpacity
           onPress={() => navigation.navigate('AddNote')}
-         style={styles.addButton}>
+          style={styles.addButton}>
           <View>
             <Icon name="plus" size={20} color="white" />
           </View>
         </TouchableOpacity>
       </View>
       <View
-        style={{
-          flex: 1,
-          padding: 10,
-          marginTop: 10,
-          borderTopLeftRadius: 20,
-          borderTopRightRadius: 20,
-        }}>
+        style={
+          styles.notesContainer
+        }>
         <FlatList
+         
           keyExtractor={item => item.id}
           data={notes}
           numColumns={3}
+          columnWrapperStyle={{justifyContent: 'space-around'}}
           renderItem={({item}) => {
             console.log(item);
-            return (
-              
-                <DisplayNote note={item} navigation={navigation} />
-            );
+            return <DisplayNote note={item} navigation={navigation} />;
           }}
         />
       </View>
@@ -89,18 +65,40 @@ const NotesScreen = ({navigation}) => {
 };
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: 'black',
+  },
+  header: {
+    height: 250,
+    backgroundColor: 'black',
+    justifyContent: 'center',
+  },
+  headerText: {color: 'white', fontSize: 30, textAlign: 'center'},
+  subHeaderText: {
+    color: 'grey',
+    fontSize: 14,
+    textAlign: 'center',
+    marginTop: 2,
+  },
   addButton: {
-      backgroundColor: '#212121',
-      width: 40,
-      justifyContent: 'center',
-      alignItems: 'center',
-      height: 40,
-      borderRadius: 100,
-      position: 'absolute',
-      right: 25,
-      bottom: 10,
-    },
-  });
+    backgroundColor: '#212121',
+    width: 40,
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 40,
+    borderRadius: 100,
+    position: 'absolute',
+    right: 25,
+    bottom: 10,
+  },
+  notesContainer:{
+    flex: 1,
+    padding: 10,
+    marginTop: 10,
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+  }
+});
 
 export default NotesScreen;
-
