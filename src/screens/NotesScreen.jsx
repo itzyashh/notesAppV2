@@ -33,6 +33,19 @@ const NotesScreen = ({navigation}) => {
       console.log(error);
     }
   };
+  const deleteNotes = async () => {
+    try {
+      const storedNotes = await AsyncStorage.getItem('@notes');
+      const notes = await JSON.parse(storedNotes);
+      const newNotes = notes.filter(note => !selectedNotes.includes(note.id));
+      await AsyncStorage.setItem('@notes', JSON.stringify(newNotes));
+      setSelectedNotes([]);
+      setSelectMode(false);
+      getNotes();
+    } catch (error) {
+      console.log(error);
+    }
+  };
   console.log(selectedNotes);
   useEffect(() => {
     getNotes();
@@ -45,7 +58,7 @@ const NotesScreen = ({navigation}) => {
         <View style={styles.buttonContainer}>
           {
             selectMode && <TouchableOpacity
-              onPress={() => navigation.navigate('AddNote')}
+              onPress={deleteNotes}
               style={styles.deleteButton}>
               <View>
                 <AntDesignIcon name="delete" size={20} color="white" />
