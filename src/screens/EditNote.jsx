@@ -13,43 +13,37 @@ import {
   
   
   const EditNote = ({navigation,route}) => {
-    const id = route.params.id;
-    const [notes, setNotes] = useState([]);
-    const [note, setNote] = useState({});
-    const getNote = async () => {
-        let note = notes.find(note => note.id === id);
-        setNote(note);
-    }
-    console.log(note);
-    const getNotes = async () => {
-        try {
-            const storedNotes = await AsyncStorage.getItem('@notes');
-            const notes = await JSON.parse(storedNotes);
-            setNotes(notes);
-            getNote();
-        } catch (error) {
-            console.log(error);
-        }
-    };
-    useEffect(() => {
-        getNotes();
-    }, []);
+    const [note, setNote] = useState(route.params.note);
+    
+    const [title, setTitle] = useState(note.title)
+    const [content, setContent] = useState(note.content)
 
-    const [title, setTitle] = useState(note?.title);
-    const [content, setContent] = useState('');
+    const editNote = async () => {
+      try {
+        const newNote = {
+          title,
+          content,
+          id: note.id,
+          date: note.date,
+          time: note.time,
+        };
+        const storedNotes = await AsyncStorage.getItem('@notes');
+        const prevNotes = await JSON.parse(storedNotes);
+        const newNotes = prevNotes.map((note) => {
+          if (note.id === newNote.id) {
+            return newNote
+          } else {
+            return note;
+          }
+        });
+        await AsyncStorage.setItem('@notes', JSON.stringify(newNotes));
+        navigation.goBack();
+      } catch (error) {
+        console.log(error);
+      }
+    };
   
-    const showToast = () => {
-      Toast.show({
-        type: 'error',
-        position: 'top',
-        text1: 'Title is required',
-        text2: 'Title is required',
-        visibilityTime: 2000,
-        autoHide: true,
-        topOffset: 30,
-        bottomOffset: 40,
-      })
-    }
+  
     
     return (
       <View style={styles.container}>
@@ -82,6 +76,7 @@ import {
           title && <View
         >
           <TouchableOpacity 
+            onPress={() => editNote()}
           style={styles.saveButton}>
             <Text>
               <Icon name="save" size={30} color="lightgrey" />
