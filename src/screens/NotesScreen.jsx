@@ -56,7 +56,12 @@ const NotesScreen = ({navigation}) => {
           columnWrapperStyle={{justifyContent: 'space-around'}}
           renderItem={({item}) => {
             console.log(item);
-            return <DisplayNote note={item} navigation={navigation} />;
+            return <TouchableOpacity
+              onPress={() => navigation.navigate('EditNote', {id: item.id})}
+              activeOpacity={0.8}
+            >
+              <DisplayNote note={item} navigation={navigation} />
+            </TouchableOpacity>
           }}
         />
       </View>

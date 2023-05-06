@@ -3,13 +3,15 @@ import React from 'react';
 
 const DisplayNote = ({note, navigation}) => {
   return (
-    <View>
+    <View style={styles.container}>
       <View style={styles.box}>
         <Text style={styles.description}>
           {!note.content ? 'No description' : note.content}
         </Text>
       </View>
-      <Text style={styles.title}>{note.title}</Text>
+      <Text
+      numberOfLines={1}
+       style={styles.title}>{note.title}</Text>
       <Text ellipsizeMode="tail" style={styles.date}>
         {note.date}
       </Text>
@@ -20,6 +22,9 @@ const DisplayNote = ({note, navigation}) => {
 export default DisplayNote;
 
 const styles = StyleSheet.create({
+  container: {
+    width: 115,
+  },
   box: {
     width: 115,
     height: 160,
@@ -28,6 +33,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#212121',
   },
   title: {
+    paddingLeft: 15,
     color: 'white',
     textAlign: 'center',
   },

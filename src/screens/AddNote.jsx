@@ -71,6 +71,8 @@ const AddNote = ({navigation}) => {
         <TextInput
           onChangeText={text => setTitle(text)}
           placeholder="Title"
+          maxLength={30}
+          placeholderTextColor="grey"
           cursorColor={'white'}
           style={styles.title}>
           {title}
@@ -82,6 +84,7 @@ const AddNote = ({navigation}) => {
           onChangeText={text => setContent(text)}
           placeholder="Write your note here"
           cursorColor={'white'}
+          placeholderTextColor="grey"
 
           style={{color: 'white', fontSize: 20, padding: 10}}
           multiline={true}
@@ -90,7 +93,7 @@ const AddNote = ({navigation}) => {
       </View>
       {
         title && <View
-      >
+        >
         <TouchableOpacity 
         style={styles.saveButton}
         onPress={title ? saveNote : showToast}>
