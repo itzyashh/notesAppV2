@@ -6,17 +6,17 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useRef, useState} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Toast from 'react-native-toast-message';
 import Icon from 'react-native-vector-icons/Entypo';
-
+import {actions,RichToolbar, RichEditor} from 'react-native-pell-rich-editor';
 
 const AddNote = ({navigation}) => {
-
-
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
+
+  const richText = React.useRef();
 
   const showToast = () => {
     Toast.show({
@@ -28,8 +28,8 @@ const AddNote = ({navigation}) => {
       autoHide: true,
       topOffset: 30,
       bottomOffset: 40,
-    })
-  }
+    });
+  };
 
   // Function to save notes to async storage
   const saveNote = async () => {
@@ -79,47 +79,48 @@ const AddNote = ({navigation}) => {
         </TextInput>
       </View>
       <View style={styles.content}>
-        <FuncStrip />
-        <TextInput
-          onChangeText={text => setContent(text)}
+        <View style={styles.funcStrip}>
+          <RichToolbar
+            editor={richText}
+            actions={[
+              actions.undo,
+              actions.setBold,
+              actions.setItalic,
+              actions.insertBulletsList,
+              actions.insertOrderedList,
+              actions.checkboxList,
+              actions.redo,
+            ]}
+            style={styles.richBar}
+            iconTint={'white'}
+            selectedIconTint={'#cad939'}
+          />
+        </View>
+        <RichEditor
+          ref={richText}
+          onChange={text => setContent(text)}
           placeholder="Write your note here"
           cursorColor={'white'}
-          placeholderTextColor="grey"
-
-          style={{color: 'white', fontSize: 20, padding: 10}}
+          placeholderTextColor="pink"
+          editorStyle={styles.editor}
           multiline={true}
-          
         />
       </View>
-      {
-        title && <View
-        >
-        <TouchableOpacity 
-        style={styles.saveButton}
-        onPress={title ? saveNote : showToast}>
-          <Text>
-            <Icon name="save" size={30} color="lightgrey" />
-          </Text>
-        </TouchableOpacity>
-      </View>
-      }
-      
+      {title && (
+        <View>
+          <TouchableOpacity
+            style={styles.saveButton}
+            onPress={title ? saveNote : showToast}>
+            <Text>
+              <Icon name="save" size={30} color="lightgrey" />
+            </Text>
+          </TouchableOpacity>
+        </View>
+      )}
     </View>
   );
 };
 
-const FuncStrip = () => {
-  return (
-    <View style={styles.funcStrip}>
-      <Text
-        style={{
-          fontSize: 6,
-        }}>
-        comming soon!!
-      </Text>
-    </View>
-  );
-};
 export default AddNote;
 
 const styles = StyleSheet.create({
@@ -163,6 +164,14 @@ const styles = StyleSheet.create({
     bottom: 20,
     right: 20,
   },
-})
-
-
+  richBar: {
+    height: 40,
+    width: '100%',
+    backgroundColor: '#212121',
+  },
+  editor: {
+    backgroundColor: 'black',
+    color: 'white',
+    contentCSSText: 'font-size: 19px; min-height: 200px; height: 100%;',
+  },
+});
