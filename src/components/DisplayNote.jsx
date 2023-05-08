@@ -1,14 +1,25 @@
 import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import AntDesignIcon from 'react-native-vector-icons/AntDesign';
-
+import RenderHtml from 'react-native-render-html';
 const DisplayNote = ({note, navigation, selectButton}) => {
+
+  const source = {
+    html: note.content,
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.box}>
-        <Text style={styles.description}>
+        {/* <Text style={styles.description}>
           {!note.content ? 'No description' : note.content}
-        </Text>
+        </Text> */}
+          <RenderHtml
+          baseStyle={styles.description}
+      contentWidth={100}
+      source={source}
+    />
+
         {selectButton && (
           <AntDesignIcon
             style={styles.selectButton}

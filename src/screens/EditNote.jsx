@@ -6,7 +6,9 @@ import {
     TouchableOpacity,
     View,
   } from 'react-native';
-  import React, {useState,useEffect} from 'react';
+  import React, {useRef, useState} from 'react';
+  import {actions,RichToolbar, RichEditor} from 'react-native-pell-rich-editor';
+
   import AsyncStorage from '@react-native-async-storage/async-storage';
   import Toast from 'react-native-toast-message';
   import Icon from 'react-native-vector-icons/Entypo';
@@ -14,6 +16,7 @@ import {
   
   const EditNote = ({navigation,route}) => {
     const [note, setNote] = useState(route.params.note);
+  const richText = React.useRef();
     
     const [title, setTitle] = useState(note.title)
     const [content, setContent] = useState(note.content)
@@ -60,17 +63,33 @@ import {
             style={styles.title}/>
         </View>
         <View style={styles.content}>
-          <FuncStrip />
-          <TextInput
-            onChangeText={text => setContent(text)}
-            placeholder="Write your note here"
-            placeholderTextColor="grey"
-            cursorColor={'white'}
-            value={content}
-            style={{color: 'white', fontSize: 20, padding: 10}}
-            multiline={true}
-            
+        <View style={styles.funcStrip}>
+          <RichToolbar
+            editor={richText}
+            actions={[
+              actions.undo,
+              actions.setBold,
+              actions.setItalic,
+              actions.insertBulletsList,
+              actions.insertOrderedList,
+              actions.checkboxList,
+              actions.redo,
+            ]}
+            style={styles.richBar}
+            iconTint={'white'}
+            selectedIconTint={'#cad939'}
           />
+        </View>
+        <RichEditor
+          ref={richText}
+          initialContentHTML={content}
+          onChange={text => setContent(text)}
+          placeholder="Write your note here"
+          cursorColor={'white'}
+          placeholderTextColor="pink"
+          editorStyle={styles.editor}
+          multiline={true}
+        />
         </View>
         {
           title && <View
@@ -143,6 +162,16 @@ import {
       position: 'absolute',
       bottom: 20,
       right: 20,
+    },
+    richBar: {
+      height: 40,
+      width: '100%',
+      backgroundColor: '#212121',
+    },
+    editor: {
+      backgroundColor: 'black',
+      color: 'white',
+      contentCSSText: 'font-size: 19px; min-height: 200px; height: 100%;',
     },
   })
   

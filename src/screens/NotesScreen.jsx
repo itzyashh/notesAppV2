@@ -33,6 +33,7 @@ const NotesScreen = ({navigation}) => {
       console.log(error);
     }
   };
+  console.log(notes);
   const deleteNotes = async () => {
     try {
       const storedNotes = await AsyncStorage.getItem('@notes');
