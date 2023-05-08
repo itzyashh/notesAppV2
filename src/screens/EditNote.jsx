@@ -81,6 +81,7 @@ import {
           />
         </View>
         <RichEditor
+          androidLayerType='software'
           ref={richText}
           initialContentHTML={content}
           onChange={text => setContent(text)}

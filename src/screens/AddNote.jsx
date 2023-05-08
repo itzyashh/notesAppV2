@@ -97,6 +97,7 @@ const AddNote = ({navigation}) => {
           />
         </View>
         <RichEditor
+          androidLayerType='software'
           ref={richText}
           onChange={text => setContent(text)}
           placeholder="Write your note here"
