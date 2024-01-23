@@ -4,6 +4,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import DisplayNote from '../components/DisplayNote';
 import EntypoIcon from 'react-native-vector-icons/Entypo';
 import AntDesignIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const NotesScreen = ({navigation}) => {
   const [notes, setNotes] = useState([]);
@@ -52,7 +53,7 @@ const NotesScreen = ({navigation}) => {
     getNotes();
   }, [screenIsFocused]);
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.headerText}>Notes</Text>
         <Text style={styles.subHeaderText}>{notes.length} notes</Text>
@@ -114,7 +115,7 @@ const NotesScreen = ({navigation}) => {
           }}
         />
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 

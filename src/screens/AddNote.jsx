@@ -11,6 +11,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Toast from 'react-native-toast-message';
 import Icon from 'react-native-vector-icons/Entypo';
 import {actions,RichToolbar, RichEditor} from 'react-native-pell-rich-editor';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const AddNote = ({navigation}) => {
   const [title, setTitle] = useState('');
@@ -63,7 +64,7 @@ const AddNote = ({navigation}) => {
     }
   };
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <View style={styles.header}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <Icon name="chevron-thin-left" size={20} color="white" />
@@ -74,6 +75,7 @@ const AddNote = ({navigation}) => {
           maxLength={30}
           placeholderTextColor="grey"
           cursorColor={'white'}
+          autoCorrect={false}
           style={styles.title}>
           {title}
         </TextInput>
@@ -118,7 +120,7 @@ const AddNote = ({navigation}) => {
           </TouchableOpacity>
         </View>
       )}
-    </View>
+    </SafeAreaView>
   );
 };
 

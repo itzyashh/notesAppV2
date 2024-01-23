@@ -12,6 +12,7 @@ import {
   import AsyncStorage from '@react-native-async-storage/async-storage';
   import Toast from 'react-native-toast-message';
   import Icon from 'react-native-vector-icons/Entypo';
+import { SafeAreaView } from 'react-native-safe-area-context';
   
   
   const EditNote = ({navigation,route}) => {
@@ -49,7 +50,7 @@ import {
   
     
     return (
-      <View style={styles.container}>
+      <SafeAreaView style={styles.container}>
         <View style={styles.header}>
           <TouchableOpacity onPress={() => navigation.goBack()}>
             <Icon name="chevron-thin-left" size={20} color="white" />
@@ -105,7 +106,7 @@ import {
         </View>
         }
         
-      </View>
+      </SafeAreaView>
     );
   };
   
