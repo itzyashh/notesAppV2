@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workspace
+   version = "1.0">
+   <Group
+      location = "container:"
+      name = "Fonts">
+      <FileRef
+         location = "group:../node_modules/react-native-vector-icons/Fonts/AntDesign.ttf">
+      </FileRef>
+      <FileRef
+         location = "group:../node_modules/react-native-vector-icons/Fonts/Entypo.ttf">
+      </FileRef>
+      <FileRef
+         location = "group:../node_modules/react-native-vector-icons/Fonts/EvilIcons.ttf">
+      </FileRef>
+      <FileRef
+         location = "group:../node_modules/react-native-vector-icons/Fonts/Feather.ttf">
+      </FileRef>
+      <FileRef
+         location = "group:../node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf">
+      </FileRef>
+      <FileRef
+         location = "group:../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Brands.ttf">
+      </FileRef>
+      <FileRef
+         location = "group:../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Regular.ttf">
+      </FileRef>
+      <FileRef
+         location = "group:../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Solid.ttf">
+      </FileRef>
+      <FileRef
+         location = "group:../node_modules/react-native-vector-icons/Fonts/Fontisto.ttf">
+      </FileRef>
+      <FileRef
+         location = "group:../node_modules/react-native-vector-icons/Fonts/Foundation.ttf">
+      </FileRef>
+      <FileRef
+         location = "group:../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf">
+      </FileRef>
+      <FileRef
+         location = "group:../node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf">
+      </FileRef>
+      <FileRef
+         location = "group:../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf">
+      </FileRef>
+      <FileRef
+         location = "group:../node_modules/react-native-vector-icons/Fonts/Octicons.ttf">
+      </FileRef>
+      <FileRef
+         location = "group:../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf">
+      </FileRef>
+      <FileRef
+         location = "group:../node_modules/react-native-vector-icons/Fonts/Zocial.ttf">
+      </FileRef>
+   </Group>
+   <FileRef
+      location = "group:NoteApp.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:Pods/Pods.xcodeproj">
+   </FileRef>
+</Workspace>
