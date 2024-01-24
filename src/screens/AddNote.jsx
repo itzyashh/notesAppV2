@@ -1,4 +1,5 @@
 import {
+  KeyboardAvoidingView,
   StyleSheet,
   Text,
   TextInput,
@@ -32,6 +33,9 @@ const AddNote = ({navigation}) => {
     });
   };
 
+  const onTitleSubmit = () => {
+    richText.current.focusContentEditor();
+  };
   // Function to save notes to async storage
   const saveNote = async () => {
     try {
@@ -72,10 +76,12 @@ const AddNote = ({navigation}) => {
         <TextInput
           onChangeText={text => setTitle(text)}
           placeholder="Title"
+          autoFocus={true}
           maxLength={30}
           placeholderTextColor="grey"
           cursorColor={'white'}
           autoCorrect={false}
+          onSubmitEditing={onTitleSubmit}
           style={styles.title}>
           {title}
         </TextInput>
@@ -90,7 +96,6 @@ const AddNote = ({navigation}) => {
               actions.setItalic,
               actions.insertBulletsList,
               actions.insertOrderedList,
-              actions.checkboxList,
               actions.redo,
             ]}
             style={styles.richBar}
@@ -110,7 +115,7 @@ const AddNote = ({navigation}) => {
         />
       </View>
       {title && (
-        <View>
+        <KeyboardAvoidingView>
           <TouchableOpacity
             style={styles.saveButton}
             onPress={title ? saveNote : showToast}>
@@ -118,7 +123,7 @@ const AddNote = ({navigation}) => {
               <Icon name="save" size={30} color="lightgrey" />
             </Text>
           </TouchableOpacity>
-        </View>
+        </KeyboardAvoidingView>
       )}
     </SafeAreaView>
   );

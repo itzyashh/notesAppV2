@@ -5,12 +5,15 @@ import DisplayNote from '../components/DisplayNote';
 import EntypoIcon from 'react-native-vector-icons/Entypo';
 import AntDesignIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import Animated from 'react-native-reanimated';
 
 const NotesScreen = ({navigation}) => {
   const [notes, setNotes] = useState([]);
   const [screenIsFocused, setScreenIsFocused] = useState(false);
   const [selectMode, setSelectMode] = useState(false);
   const [selectedNotes, setSelectedNotes] = useState([]);
+
+  const AnimatedBtn = Animated.createAnimatedComponent(TouchableOpacity);
  
   if (navigation.addListener) {
     navigation.addListener('focus', () => {
@@ -86,7 +89,7 @@ const NotesScreen = ({navigation}) => {
           columnWrapperStyle={{justifyContent: 'space-around'}}
           renderItem={({item}) => {
             return (
-              <TouchableOpacity
+              <AnimatedBtn
                 onPress={() => {
                   if (selectMode) {
                     if (selectedNotes.includes(item.id)) {
@@ -110,7 +113,7 @@ const NotesScreen = ({navigation}) => {
                   navigation={navigation}
                   selectButton={selectedNotes.includes(item.id)}
                 />
-              </TouchableOpacity>
+              </AnimatedBtn>
             );
           }}
         />
