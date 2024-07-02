@@ -5,7 +5,7 @@ import DisplayNote from '../components/DisplayNote';
 import EntypoIcon from 'react-native-vector-icons/Entypo';
 import AntDesignIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import Animated from 'react-native-reanimated';
+import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
 
 const NotesScreen = ({navigation}) => {
   const [notes, setNotes] = useState([]);
@@ -14,6 +14,14 @@ const NotesScreen = ({navigation}) => {
   const [selectedNotes, setSelectedNotes] = useState([]);
 
   const AnimatedBtn = Animated.createAnimatedComponent(TouchableOpacity);
+
+  const scale = useSharedValue(1);
+
+  const notePreviewStyle = useAnimatedStyle(()=>{
+    return {
+      transform: [{scale: scale.value}]
+    }
+  })
  
   if (navigation.addListener) {
     navigation.addListener('focus', () => {
@@ -59,7 +67,7 @@ const NotesScreen = ({navigation}) => {
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.headerText}>Notes</Text>
-        <Text style={styles.subHeaderText}>{notes.length} notes</Text>
+        <Text style={styles.subHeaderText}>{notes.length} {notes.length === 1 ? 'note' : 'notes'}</Text>
         <View style={styles.buttonContainer}>
           {
             selectMode && <TouchableOpacity
@@ -86,10 +94,13 @@ const NotesScreen = ({navigation}) => {
           keyExtractor={item => item.id}
           data={notes}
           numColumns={3}
+          style={{padding: 10}}
           columnWrapperStyle={{justifyContent: 'space-around'}}
           renderItem={({item}) => {
             return (
               <AnimatedBtn
+
+                style={[notePreviewStyle]}
                 onPress={() => {
                   if (selectMode) {
                     if (selectedNotes.includes(item.id)) {
@@ -106,6 +117,13 @@ const NotesScreen = ({navigation}) => {
                 onLongPress={() => {
                   setSelectMode(true);
                   setSelectedNotes([...selectedNotes, item.id]);
+                }}
+                onPressIn={() => {
+                  scale.value = withTiming(1.1);
+                }}
+                onPressOut={() => {
+                  scale.value = withTiming(1);
+
                 }}
                 activeOpacity={0.8}>
                 <DisplayNote
